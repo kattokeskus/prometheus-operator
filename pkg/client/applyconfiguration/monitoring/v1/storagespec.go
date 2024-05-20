@@ -26,7 +26,9 @@ type StorageSpecApplyConfiguration struct {
 	DisableMountSubPath *bool                                            `json:"disableMountSubPath,omitempty"`
 	EmptyDir            *v1.EmptyDirVolumeSource                         `json:"emptyDir,omitempty"`
 	Ephemeral           *v1.EphemeralVolumeSource                        `json:"ephemeral,omitempty"`
+	ExistingClaimName   *string                                          `json:"existingClaimName,omitempty"`
 	VolumeClaimTemplate *EmbeddedPersistentVolumeClaimApplyConfiguration `json:"volumeClaimTemplate,omitempty"`
+	SubPath             *string                                          `json:"subPath,omitempty"`
 }
 
 // StorageSpecApplyConfiguration constructs an declarative configuration of the StorageSpec type for use with
@@ -59,10 +61,26 @@ func (b *StorageSpecApplyConfiguration) WithEphemeral(value v1.EphemeralVolumeSo
 	return b
 }
 
+// WithExistingClaimName sets the ExistingClaimName field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the ExistingClaimName field is set to the value of the last call.
+func (b *StorageSpecApplyConfiguration) WithExistingClaimName(value string) *StorageSpecApplyConfiguration {
+	b.ExistingClaimName = &value
+	return b
+}
+
 // WithVolumeClaimTemplate sets the VolumeClaimTemplate field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the VolumeClaimTemplate field is set to the value of the last call.
 func (b *StorageSpecApplyConfiguration) WithVolumeClaimTemplate(value *EmbeddedPersistentVolumeClaimApplyConfiguration) *StorageSpecApplyConfiguration {
 	b.VolumeClaimTemplate = value
+	return b
+}
+
+// WithSubPath sets the SubPath field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the SubPath field is set to the value of the last call.
+func (b *StorageSpecApplyConfiguration) WithSubPath(value string) *StorageSpecApplyConfiguration {
+	b.SubPath = &value
 	return b
 }

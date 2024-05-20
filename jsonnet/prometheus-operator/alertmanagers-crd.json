@@ -4524,6 +4524,14 @@
                         },
                         "type": "object"
                       },
+                      "existingClaimName": {
+                        "description": "Existing PVC name to be used by the StatefulSet.",
+                        "type": "string"
+                      },
+                      "subPath": {
+                        "description": "Sub path for volume mount",
+                        "type": "string"
+                      },
                       "volumeClaimTemplate": {
                         "description": "Defines the PVC spec to be used by the Prometheus StatefulSets.\nThe easiest way to use a volume that cannot be automatically provisioned\nis to use a label selector alongside manually created PersistentVolumes.",
                         "properties": {

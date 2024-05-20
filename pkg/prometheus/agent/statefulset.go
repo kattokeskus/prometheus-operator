@@ -118,6 +118,15 @@ func makeStatefulSet(
 				Ephemeral: ephemeral,
 			},
 		})
+	} else if storageSpec.ExistingClaimName != nil {
+		statefulset.Spec.Template.Spec.Volumes = append(statefulset.Spec.Template.Spec.Volumes, v1.Volume{
+			Name: prompkg.VolumeName(p),
+			VolumeSource: v1.VolumeSource{
+				PersistentVolumeClaim: &v1.PersistentVolumeClaimVolumeSource{
+					ClaimName: *storageSpec.ExistingClaimName,
+				},
+			},
+		})
 	} else {
 		pvcTemplate := operator.MakeVolumeClaimTemplate(storageSpec.VolumeClaimTemplate)
 		if pvcTemplate.Name == "" {

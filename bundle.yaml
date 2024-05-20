@@ -10995,6 +10995,12 @@ spec:
                         - spec
                         type: object
                     type: object
+                  existingClaimName:
+                    description: Existing PVC name to be used by the StatefulSet.
+                    type: string
+                  subPath:
+                    description: Sub path for volume mount
+                    type: string
                   volumeClaimTemplate:
                     description: |-
                       Defines the PVC spec to be used by the Prometheus StatefulSets.
@@ -22044,6 +22050,12 @@ spec:
                         - spec
                         type: object
                     type: object
+                  existingClaimName:
+                    description: Existing PVC name to be used by the StatefulSet.
+                    type: string
+                  subPath:
+                    description: Sub path for volume mount
+                    type: string
                   volumeClaimTemplate:
                     description: |-
                       Defines the PVC spec to be used by the Prometheus StatefulSets.
@@ -32877,6 +32889,12 @@ spec:
                         - spec
                         type: object
                     type: object
+                  existingClaimName:
+                    description: Existing PVC name to be used by the StatefulSet.
+                    type: string
+                  subPath:
+                    description: Sub path for volume mount
+                    type: string
                   volumeClaimTemplate:
                     description: |-
                       Defines the PVC spec to be used by the Prometheus StatefulSets.
@@ -47032,6 +47050,12 @@ spec:
                         - spec
                         type: object
                     type: object
+                  existingClaimName:
+                    description: Existing PVC name to be used by the StatefulSet.
+                    type: string
+                  subPath:
+                    description: Sub path for volume mount
+                    type: string
                   volumeClaimTemplate:
                     description: |-
                       Defines the PVC spec to be used by the Prometheus StatefulSets.

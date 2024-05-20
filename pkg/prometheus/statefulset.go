@@ -173,8 +173,16 @@ func prefix(p monitoringv1.PrometheusInterface) string {
 // TODO: Storage methods should be moved to server package.
 // It is stil here because promcfg still uses it.
 func SubPathForStorage(s *monitoringv1.StorageSpec) string {
+	if s == nil {
+		return ""
+	}
+
+	if s.SubPath != nil {
+		return *s.SubPath
+	}
+
 	//nolint:staticcheck // Ignore SA1019 this field is marked as deprecated.
-	if s == nil || s.DisableMountSubPath {
+	if s.DisableMountSubPath {
 		return ""
 	}
 

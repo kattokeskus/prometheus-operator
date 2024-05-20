@@ -999,7 +999,8 @@ type AlertingSpec struct {
 // If multiple storage options are specified, priority will be given as follows:
 //  1. emptyDir
 //  2. ephemeral
-//  3. volumeClaimTemplate
+//  3. existingVolumeClaimName
+//  4. volumeClaimTemplate
 //
 // +k8s:openapi-gen=true
 type StorageSpec struct {
@@ -1014,10 +1015,14 @@ type StorageSpec struct {
 	// For lower versions, starting with k8s 1.19, it requires enabling the GenericEphemeralVolume feature gate.
 	// More info: https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes
 	Ephemeral *v1.EphemeralVolumeSource `json:"ephemeral,omitempty"`
+	// Existing PVC name to be used by the StatefulSet.
+	ExistingClaimName *string `json:"existingClaimName,omitempty"`
 	// Defines the PVC spec to be used by the Prometheus StatefulSets.
 	// The easiest way to use a volume that cannot be automatically provisioned
 	// is to use a label selector alongside manually created PersistentVolumes.
 	VolumeClaimTemplate EmbeddedPersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
+	// Sub path for volume mount
+	SubPath *string `json:"subPath,omitempty"`
 }
 
 // QuerySpec defines the query command line flags when starting Prometheus.

@@ -13984,7 +13984,8 @@ If no storage option is specified, then by default an <a href="https://kubernete
 <p>If multiple storage options are specified, priority will be given as follows:
 1. emptyDir
 2. ephemeral
-3. volumeClaimTemplate</p>
+3. existingVolumeClaimName
+4. volumeClaimTemplate</p>
 </div>
 <table>
 <thead>
@@ -14038,6 +14039,17 @@ More info: <a href="https://kubernetes.io/docs/concepts/storage/ephemeral-volume
 </tr>
 <tr>
 <td>
+<code>existingClaimName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Existing PVC name to be used by the StatefulSet.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>volumeClaimTemplate</code><br/>
 <em>
 <a href="#monitoring.coreos.com/v1.EmbeddedPersistentVolumeClaim">
@@ -14049,6 +14061,17 @@ EmbeddedPersistentVolumeClaim
 <p>Defines the PVC spec to be used by the Prometheus StatefulSets.
 The easiest way to use a volume that cannot be automatically provisioned
 is to use a label selector alongside manually created PersistentVolumes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subPath</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Sub path for volume mount</p>
 </td>
 </tr>
 </tbody>

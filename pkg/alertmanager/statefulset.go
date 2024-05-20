@@ -152,6 +152,15 @@ func makeStatefulSet(logger log.Logger, am *monitoringv1.Alertmanager, config Co
 				Ephemeral: ephemeral,
 			},
 		})
+	} else if storageSpec.ExistingClaimName != nil {
+		statefulset.Spec.Template.Spec.Volumes = append(statefulset.Spec.Template.Spec.Volumes, v1.Volume{
+			Name: volumeName(am.Name),
+			VolumeSource: v1.VolumeSource{
+				PersistentVolumeClaim: &v1.PersistentVolumeClaimVolumeSource{
+					ClaimName: *storageSpec.ExistingClaimName,
+				},
+			},
+		})
 	} else {
 		pvcTemplate := operator.MakeVolumeClaimTemplate(storageSpec.VolumeClaimTemplate)
 		if pvcTemplate.Name == "" {
@@ -825,6 +834,10 @@ func prefixedName(name string) string {
 func subPathForStorage(s *monitoringv1.StorageSpec) string {
 	if s == nil {
 		return ""
+	}
+
+	if s.SubPath != nil {
+		return *s.SubPath
 	}
 
 	//nolint:staticcheck // Ignore SA1019 this field is marked as deprecated.
