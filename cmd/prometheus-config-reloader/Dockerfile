@@ -1,4 +1,4 @@
-ARG ARCH="amd64"
+ARG ARCH=${TARGETARCH}
 ARG OS="linux"
 FROM quay.io/prometheus/busybox-${OS}-${ARCH}:latest
 

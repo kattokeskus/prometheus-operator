@@ -190,6 +190,22 @@ image: .hack-operator-image .hack-prometheus-config-reloader-image .hack-admissi
 	$(CONTAINER_CLI) build --build-arg ARCH=$(ARCH) --build-arg OS=$(GOOS) -t $(IMAGE_WEBHOOK):$(TAG) -f cmd/admission-webhook/Dockerfile .
 	touch $@
 
+.PHONY: bake-image
+bake-image: GOOS := linux # Overriding GOOS value for docker image build
+bake-image: .hack-operator-bake .hack-prometheus-config-reloader-bake .hack-admission-webhook-bake
+
+.hack-operator-bake: docker-bake.hcl Dockerfile operator
+	TAG=$(TAG) OS=$(GOOS) IMAGE_OPERATOR=$(IMAGE_OPERATOR) docker buildx bake --set prometheus-operator-combined.output=type=registry prometheus-operator-combined
+	touch $@
+
+.hack-prometheus-config-reloader-bake: docker-bake.hcl cmd/prometheus-config-reloader/Dockerfile prometheus-config-reloader
+	TAG=$(TAG) OS=$(GOOS) IMAGE_RELOADER=$(IMAGE_RELOADER) docker buildx bake --set prometheus-config-reloader-combined.output=type=registry prometheus-config-reloader-combined
+	touch $@
+
+.hack-admission-webhook-bake: docker-bake.hcl cmd/admission-webhook/Dockerfile admission-webhook
+	TAG=$(TAG) OS=$(GOOS) IMAGE_WEBHOOK=$(IMAGE_WEBHOOK) docker buildx bake --set admission-webhook-combined.output=type=registry admission-webhook-combined
+	touch $@
+
 .PHONY: update-go-deps
 update-go-deps:
 	for m in $$(go list -mod=readonly -m -f '{{ if and (not .Indirect) (not .Main)}}{{.Path}}{{end}}' all); do \
